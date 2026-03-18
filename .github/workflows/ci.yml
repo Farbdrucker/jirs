@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  backend:
+    name: Backend
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: jirs
+          POSTGRES_PASSWORD: jirs
+          POSTGRES_DB: jirs
+        options: >-
+          --health-cmd "pg_isready -U jirs"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    env:
+      DATABASE_URL: postgres://jirs:jirs@localhost:5432/jirs
+      # Use the committed .sqlx/ cache so compilation doesn't need a live DB
+      SQLX_OFFLINE: "true"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workdir: backend
+
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov
+
+      - name: Grant CREATEDB to test user
+        run: psql $DATABASE_URL -c "ALTER USER jirs CREATEDB;"
+
+      - name: Test with coverage
+        working-directory: backend
+        run: cargo llvm-cov --all-targets --workspace --lcov --output-path lcov.info
+
+      - name: Upload backend coverage
+        uses: codecov/codecov-action@v4
+        with:
+          files: backend/lcov.info
+          flags: backend
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Test with coverage
+        working-directory: frontend
+        run: npm run test:coverage
+
+      - name: Upload frontend coverage
+        uses: codecov/codecov-action@v4
+        with:
+          files: frontend/coverage/lcov.info
+          flags: frontend
+          token: ${{ secrets.CODECOV_TOKEN }}

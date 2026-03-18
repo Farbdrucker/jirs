@@ -7,6 +7,10 @@ edition = "2021"
 name = "jirs"
 path = "src/main.rs"
 
+[lib]
+name = "jirs"
+path = "src/lib.rs"
+
 [dependencies]
 axum = { version = "0.8", features = ["macros"] }
 tokio = { version = "1", features = ["full"] }
@@ -28,3 +32,8 @@ http = "1"
 axum-extra = { version = "0.9", features = ["cookie"] }
 rand = "0.8"
 regex = "1"
+
+[dev-dependencies]
+axum-test = "19"
+http-body-util = "0.1"
+tower = { version = "0.5", features = ["util"] }

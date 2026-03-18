@@ -24,6 +24,7 @@ target
 frontend/node_modules/
 frontend/.svelte-kit/
 frontend/build/
+frontend/coverage/
 frontend/.env
 
 # Backend
