@@ -1,0 +1,78 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        WITH updated AS (\n            UPDATE comments SET body = $1, updated_at = NOW()\n            WHERE id = $2 AND author_id = $3\n            RETURNING *\n        )\n        SELECT u2.id, u2.ticket_id, u2.author_id, u.username AS author_username,\n               u.display_name AS author_display_name, u.avatar_url AS author_avatar_url,\n               u2.parent_id, u2.body, u2.created_at, u2.updated_at\n        FROM updated u2\n        JOIN users u ON u.id = u2.author_id\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "ticket_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "author_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "author_username",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "author_display_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "author_avatar_url",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "parent_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 7,
+        "name": "body",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 9,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "84de5af23e520773a342d1b3114d5ae3b110650b1cc61c07a58ff0e6ea8c6ad1"
+}

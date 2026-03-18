@@ -1,0 +1,70 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT a.id, a.ticket_id, a.actor_id, u.username AS actor_username,\n               u.display_name AS actor_display_name,\n               a.action, a.old_value, a.new_value, a.created_at\n        FROM activity a\n        JOIN users u ON u.id = a.actor_id\n        WHERE a.ticket_id = $1\n        ORDER BY a.created_at DESC\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "ticket_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "actor_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "actor_username",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "actor_display_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "action",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "old_value",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "new_value",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false
+    ]
+  },
+  "hash": "ab7d394b0ca4fc2526ab91f2d0692ee7dccf9646af5aa6b2472420de813e88de"
+}

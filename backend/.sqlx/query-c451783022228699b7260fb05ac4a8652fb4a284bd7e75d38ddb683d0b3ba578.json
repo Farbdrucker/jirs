@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE project_ticket_counter SET counter = counter + 1 WHERE project_id = $1 RETURNING counter",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "counter",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "c451783022228699b7260fb05ac4a8652fb4a284bd7e75d38ddb683d0b3ba578"
+}

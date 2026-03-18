@@ -1,0 +1,79 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        WITH inserted AS (\n            INSERT INTO comments (ticket_id, author_id, parent_id, body)\n            VALUES ($1, $2, $3, $4)\n            RETURNING *\n        )\n        SELECT i.id, i.ticket_id, i.author_id, u.username AS author_username,\n               u.display_name AS author_display_name, u.avatar_url AS author_avatar_url,\n               i.parent_id, i.body, i.created_at, i.updated_at\n        FROM inserted i\n        JOIN users u ON u.id = i.author_id\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "ticket_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "author_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "author_username",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "author_display_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "author_avatar_url",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "parent_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 7,
+        "name": "body",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 9,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "6273e0d2aa3f7db6ee6f07c03c8548b181bc6a3f3fa60f297a8d6a2cd45f70d2"
+}

@@ -1,0 +1,11 @@
+CREATE INDEX idx_tickets_project_status ON tickets(project_id, status);
+CREATE INDEX idx_tickets_assignee       ON tickets(assignee_id);
+CREATE INDEX idx_tickets_sprint         ON tickets(sprint_id);
+CREATE INDEX idx_comments_ticket        ON comments(ticket_id);
+CREATE INDEX idx_activity_ticket        ON activity(ticket_id);
+CREATE INDEX idx_tickets_project_type   ON tickets(project_id, ticket_type);
+CREATE INDEX idx_ticket_links_source    ON ticket_links(source_id);
+CREATE INDEX idx_ticket_links_target    ON ticket_links(target_id);
+CREATE INDEX idx_repo_links_ticket      ON repo_links(ticket_id);
+CREATE INDEX idx_tags_project           ON tags(project_id);
+CREATE INDEX idx_sprints_project        ON sprints(project_id);

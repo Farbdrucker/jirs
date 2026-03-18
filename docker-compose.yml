@@ -1,0 +1,31 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: postgres://jirs:jirs@db:5432/jirs
+      JWT_SECRET: changeme_in_production
+      JWT_REFRESH_SECRET: changeme_in_production
+      RUST_LOG: info
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: jirs
+      POSTGRES_PASSWORD: jirs
+      POSTGRES_DB: jirs
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jirs"]
+      interval: 5s
+      retries: 5
+
+volumes:
+  pgdata:
