@@ -33,3 +33,4 @@ backend/static/
 # OS
 .DS_Store
 Thumbs.db
+idea_slides.html
