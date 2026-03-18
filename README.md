@@ -1,5 +1,12 @@
 # jirs
 
+![Rust](https://img.shields.io/badge/Rust-1.75+-000000?style=flat&logo=rust&logoColor=white)
+![Svelte](https://img.shields.io/badge/Svelte-5-FF3E00?style=flat&logo=svelte&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat&logo=typescript&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-ready-2496ED?style=flat&logo=docker&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat)
+
 A self-hosted, Jira-like ticket system. Rust backend, Svelte 5 frontend, PostgreSQL.
 
 ## Tech Stack
